@@ -9,7 +9,8 @@ namespace WikipediaScraper
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(scrapeRequest.HTML);
-            return htmlDoc.DocumentNode.SelectNodes(scrapeRequest.XPath).First().InnerHtml;
+            string html = htmlDoc.DocumentNode.SelectNodes(scrapeRequest.XPath).First().InnerHtml;
+            return html;
         }
     }
 }
