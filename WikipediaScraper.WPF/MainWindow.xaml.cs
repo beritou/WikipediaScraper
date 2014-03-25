@@ -15,6 +15,13 @@ namespace WikipediaScraper.WPF
         public MainWindow()
         {
             InitializeComponent();
+            WebBrowser.NavigateToString("Downloading from Wikipedia...");
+            Loaded += MainWindow_Loaded;
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= MainWindow_Loaded;
             WebScrapeFromWikipedia();
         }
 
@@ -24,7 +31,7 @@ namespace WikipediaScraper.WPF
             var request = new ScrapeRequest { HTML = html, XPath = "//*[@id=\"mp-dyk\"]/ul" };
             var scraper = new Scraper();
             string result = scraper.Scrape(request);
-            WebBrowser.NavigateToString(result);
+            DisplayResult(result);
         }
 
         async Task<string> DownloadHTMLFromWikipedia()
@@ -33,6 +40,11 @@ namespace WikipediaScraper.WPF
             Task<string> downloadStringTask = client.DownloadStringTaskAsync(new Uri("http://en.wikipedia.org/wiki/Main_Page"));
             string html = await downloadStringTask;
             return html;
+        }
+
+        private void DisplayResult(string result)
+        {
+            WebBrowser.NavigateToString(result);
         }
     }
 }
