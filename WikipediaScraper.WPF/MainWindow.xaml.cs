@@ -10,8 +10,6 @@ namespace WikipediaScraper.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string html = String.Empty;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +25,7 @@ namespace WikipediaScraper.WPF
 
         private async void WebScrapeFromWikipedia()
         {
-            html = await DownloadHTMLFromWikipedia();
+            string html = await DownloadHTMLFromWikipedia();
             var request = new ScrapeRequest { HTML = html, XPath = "//*[@id=\"mp-dyk\"]/ul" };
             var scraper = new Scraper();
             string result = scraper.Scrape(request);
